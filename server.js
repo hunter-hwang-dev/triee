@@ -30,5 +30,5 @@ app.get('/login', (request, response) => {
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
     const lang = request.params.lang;
     response.cookie('lang', lang, {maxAge: 100000, httpOnly: true});
-    response.redirect('back');
+    response.location(request.get("Referrer") || "/");
 })
