@@ -9,5 +9,5 @@ app.listen(8080, () => {
 })
 
 app.get('/', (request, response) => {
-    request.send('welcome to Triee!')
+    response.send('welcome to Triee!')
 })
