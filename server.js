@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-
 i18n.configure({
     locales: ['en-US', 'ko-KR'],
     directory: path.join(__dirname, '/locales'),
@@ -19,9 +18,22 @@ app.use(i18n.init); // i18n 미들웨어 추가
 
 app.set('view engine', 'ejs')
 
-app.listen(8080, () => {
-    console.log('listening on 8080: http://localhost:8080')
+//MongoDB 셋팅
+const { MongoClient } = require('mongodb')
+let db
+const url = '' //향후 저장되지 않는 보안 폴더로 옮길 것.
+new MongoClient(url).connect.then((client)=> {
+    console.log('DB connected')
+    db = client.db('trieeDB')
+
+    app.listen(8080, () => {
+        console.log('listening on 8080: http://localhost:8080')
+    })
+    
+}).catch((err)=> {
+    console.log(err)
 })
+
 
 
 app.get('/', (request, response) => {

@@ -6,8 +6,13 @@
     <title>Triee</title>
 </head>
 <body>
-    <input type="text" name="userId" placeholder="<%= __('login_id_is') %>">
-    <input type="text" name="userPassword" placeholder="<%= __('login_password_is') %>">
+    <form>
+        <input type="text" name="userId" placeholder="<%= __('login_id_is') %>">
+    <br>
+        <input type="text" name="userPassword" placeholder="<%= __('login_password_is') %>">
+    <br>
+        <input type="submit" value="<%=__('login_button')%>">
+    </form>
 
     <%- include('footer.ejs') %>
 </body>
