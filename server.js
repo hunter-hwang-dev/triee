@@ -63,7 +63,9 @@ passport.use(new LocalStrategy(async (usernameInput, passwordInput, cb) => {
     if (!result) {
       return cb(null, false, { message: 'invalid username' }); //i18n.t(errors_usernameNotFound)
     }
-    if (result.password == passwordInput) {
+
+    //result.password는 가입 시 hash되어 DB에 저장.
+    if (await bcrypt.compare(passwordInput, result.password)) {
       return cb(null, result);
     } else {
       return cb(null, false, { message: 'invalid password' }); //i18n.t(errors_passwordMismatch)
