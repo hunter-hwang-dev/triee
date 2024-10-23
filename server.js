@@ -77,10 +77,10 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser( async(user, done) => { //cookie 분석 > 어디서든 request.user 사용 가능하게 해줍니다.
-  let result = await db.collection('users').findOne({_id: new ObjectId(user.id)});
+  let result = await db.collection('users').findOne({_id: new ObjectId(user.id)})
   delete result.password; //비번은 삭제
   process.nextTick(() => { 
-    done(null, result);
+    return done(null, result);
   })
 })
 //session passport login 가져오기 끝
