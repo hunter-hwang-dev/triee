@@ -4,11 +4,11 @@ const path = require('path');
 const app = express();
 
 i18n.configure({
-    locales: ['en', 'ko'],
+    locales: ['en-US', 'ko-KR'],
     directory: path.join(__dirname, '/locales'),
-    defaultLocale: 'en',
-    cookie: 'lang', // 사용자가 언어를 선택할 때 설정할 쿠키 이름
-    queryParameter: 'lang' // URL 쿼리 파라미터로 언어를 설정할 때 사용할 파라미터 이름
+    defaultLocale: 'en-US',
+    cookie: 'lang',
+    queryParameter: 'lang'
   });
   
 app.use(i18n.init); // i18n 미들웨어 추가
