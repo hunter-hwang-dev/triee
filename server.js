@@ -12,8 +12,6 @@ const bcrypt = require('bcrypt');
 app.use(express.json())
 app.use(express.urlencoded({extended:true})) 
 
-const dbUri = process.env.DB_URI;
-
 i18n.configure({
     locales: ['en-US', 'ko-KR'],
     directory: path.join(__dirname, '/locales'),
@@ -29,13 +27,13 @@ app.set('view engine', 'ejs');
 //MongoDB 셋팅
 const { MongoClient, ObjectId } = require('mongodb');
 let db;
-const url = dbUri;
+const url = process.env.DB_URL;
 new MongoClient(url).connect().then((client)=> {
     console.log('DB connected');
     db = client.db('trieeDB');
 
-    app.listen(8080, () => {
-        console.log('listening on 8080: http://localhost:8080');
+    app.listen(process.env.PORT, () => {
+        console.log('서버 실행중');
     })
     
 }).catch((err)=> {
@@ -50,10 +48,10 @@ const LocalStrategy = require('passport-local');
 
 app.use(passport.initialize());
 app.use(session({
-  secret: '암호화에 쓸 비번', //털리면 큰일나요!
+  secret: process.env.SESSION_SECRET, //털리면 큰일나요!
   resave : false,
   saveUninitialized : false,
-  cookie : { maxAge : 1000 * 60 * 60 } //session cookie 1시간 유지
+  cookie : { maxAge : process.env.SESSION_COOKIE_MAXAGE }
 }))
 app.use(passport.session());
 
@@ -156,6 +154,6 @@ app.post('/login', async (request, response, next) => {
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
     console.log(request.params.lang);
     const lang = request.params.lang;
-    response.cookie('lang', lang, {maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: false}); //밀리초 단위 > 7일 쿠키
+    response.cookie('lang', lang, {maxAge: process.env.LANG_COOKIE_MAXAGE, httpOnly: false});
     response.redirect("/");
 })
