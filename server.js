@@ -33,7 +33,7 @@ new MongoClient(url).connect().then((client)=> {
     db = client.db('trieeDB');
 
     app.listen(process.env.PORT, () => {
-        console.log('서버 실행중');
+        console.log('서버 실행중: ' + 'http://localhost:' + process.env.PORT);
     })
     
 }).catch((err)=> {
@@ -51,7 +51,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET, //털리면 큰일나요!
   resave : false,
   saveUninitialized : false,
-  cookie : { maxAge : process.env.SESSION_COOKIE_MAXAGE }
+  cookie : { maxAge : Number(process.env.SESSION_EXPIRY) }
 }))
 app.use(passport.session());
 
@@ -154,7 +154,7 @@ app.post('/login', async (request, response, next) => {
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
     console.log(request.params.lang);
     const lang = request.params.lang;
-    response.cookie('lang', lang, {maxAge: process.env.LANG_COOKIE_MAXAGE, httpOnly: false});
+    response.cookie('lang', lang, {maxAge: Number(process.env.LANG_EXPIRY), httpOnly: false});
     response.redirect("/");
 })
 
