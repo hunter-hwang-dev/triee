@@ -39,30 +39,30 @@ new MongoClient(url).connect().then((client)=> {
 
 //--------------------------------------------------------------
 //session passport login 가져오기 시작
-// const session = require('express-session')
-// const passport = require('passport')
-// const LocalStrategy = require('passport-local')
+const session = require('express-session')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
-// app.use(passport.initialize())
-// app.use(session({
-//   secret: '암호화에 쓸 비번', //털리면 큰일나요!
-//   resave : false,
-//   saveUninitialized : false
-// }))
-// app.use(passport.session()) 
+app.use(passport.initialize())
+app.use(session({
+  secret: '암호화에 쓸 비번', //털리면 큰일나요!
+  resave : false,
+  saveUninitialized : false
+}))
+app.use(passport.session()) 
 
 
-// passport.use(new LocalStrategy(async (usernameInput, passwordInput, cb) => {
-//     let result = await db.collection('users').findOne({ username : usernameInput})
-//     if (!result) {
-//       return cb(null, false, { message: i18n.t('errors.usernameNotFound') })
-//     }
-//     if (result.password == passwordInput) {
-//       return cb(null, result)
-//     } else {
-//       return cb(null, false, { message: i18n.t('errors.passwordMismatch') });
-//     }
-//   }))
+passport.use(new LocalStrategy(async (usernameInput, passwordInput, cb) => {
+    let result = await db.collection('users').findOne({ username : usernameInput})
+    if (!result) {
+      return cb(null, false, { message: i18n.t('errors_usernameNotFound') })
+    }
+    if (result.password == passwordInput) {
+      return cb(null, result)
+    } else {
+      return cb(null, false, { message: i18n.t('errors_passwordMismatch') });
+    }
+  }))
 //session passport login 가져오기 끝
 //--------------------------------------------------------------
 
@@ -75,9 +75,18 @@ app.get('/login', (request, response) => {
     response.render('login.ejs')
 })
 
-// app.post('/login', async (request, response, next)=>{
-//     //제출한 username, password가 db에 있는 값과 일치하는지 확인 후 session 생성
-// })
+app.post('/login', async (request, response, next)=>{
+    passport.authenticate('local', (error, user, info) => {
+      if (error) return response.status(500).json(error);
+      if (!user) return response.status(401).json(info.message); //info.message는 상단에 선언
+      request.logIn(user, (err) => { //session 생성
+        if (err) return next(err);
+        response.redirect('/') // 로그인 완료 시 리다이렉트
+      }) 
+
+    })(request, response, next)
+
+})
 
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
     console.log(request.params.lang);
