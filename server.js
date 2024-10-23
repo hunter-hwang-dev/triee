@@ -28,7 +28,8 @@ app.get('/login', (request, response) => {
 })
 
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
+    console.log(request.params.lang);
     const lang = request.params.lang;
-    response.cookie('lang', lang, {maxAge: 100000, httpOnly: true});
+    response.cookie('lang', lang, {maxAge: 1000000, httpOnly: true});
     response.location(request.get("Referrer") || "/");
 })
