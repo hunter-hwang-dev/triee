@@ -4,8 +4,9 @@ const express = require('express');
 const i18n = require('i18n');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-
 const app = express();
+
+const bcrypt = require('bcrypt');
 
 //request.body 미리 풀어줘요.
 app.use(express.json())
@@ -96,19 +97,23 @@ app.get('/signup', (request, response) => {
 })
 
 app.post('/signup', async (request, response) => {
-  //서버에 계정 정보 추가하기
-  console.log(request.body);
-  //빈칸 체크
+  //서버에 계정 정보 추가하기 = 회원가입
+  
+  //빈칸 exception
   if (request.body.username == '') {
     return response.status(400).send({ message: "Please write username."});
   }
   else if (request.body.password == '') {
     return response.status(400).send({ message: "Please write password."});
   }
-  //
+
+  //hashing
+  let hash = await bcrypt.hash(request.body.password, 10) //50ms 정도 걸려여
+  console.log(hash) //salt(뒤에 붙는 랜덤 문자값) + hash값이 나옴. 딴데 분리해서 저장하면 pepper가 됨여. 귀엽다.
+
   await db.collection('users').insertOne({
     username: request.body.username ,
-    password: request.body.password })
+    password: hash })
     console.log('user info added on DB');
     response.redirect('/');
 })
