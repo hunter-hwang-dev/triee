@@ -1,9 +1,13 @@
+require('dotenv').config();
+
 const express = require('express');
 const i18n = require('i18n');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const app = express();
+
+const dbUri = process.env.DB_URI;
 
 i18n.configure({
     locales: ['en-US', 'ko-KR'],
@@ -21,8 +25,8 @@ app.set('view engine', 'ejs')
 //MongoDB 셋팅
 const { MongoClient } = require('mongodb')
 let db
-const url = '' //향후 저장되지 않는 보안 폴더로 옮길 것.
-new MongoClient(url).connect.then((client)=> {
+const url = dbUri;
+new MongoClient(url).connect().then((client)=> {
     console.log('DB connected')
     db = client.db('trieeDB')
 
