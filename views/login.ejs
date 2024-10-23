@@ -6,7 +6,8 @@
     <title>Triee</title>
 </head>
 <body>
-    <form>
+    <form action="/login" method="POST">
+        <h2><%= __('login_heading') %></h2>
         <input type="text" name="username" placeholder="<%= __('login_usernamePlaceholder') %>">
     <br>
         <input type="password" name="password" placeholder="<%= __('login_passwordPlaceholder') %>">

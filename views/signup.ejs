@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triee</title>
+</head>
+<body>
+    <form action="/signup" method="POST">
+        <h2><%= __('signup_heading') %></h2>
+        <input type="text" name="username" placeholder="<%= __('signup_usernamePlaceholder') %>">
+    <br>
+        <input type="password" name="password" placeholder="<%= __('signup_passwordPlaceholder') %>">
+    <br>
+        <input type="submit" value="<%= __('signup_clickToSubmit') %>">
+    </form>
+
+    <%- include('footer.ejs') %>
+</body>
+</html>

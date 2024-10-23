@@ -4,8 +4,15 @@
 
 	"index_welcomeMessage": "Welcome to Triee!",
 	"index_toLogin": "Click to Login: do you already have an account?",
+	"index_toSignup": "Click here to make a new account!",
 
+	"login_heading": "Nice to see you again.",
 	"login_usernamePlaceholder": "Username",
 	"login_passwordPlaceholder": "Password",
-	"login_clickToSubmit": "Log in"
+	"login_clickToSubmit": "Log in",
+
+	"signup_heading": "Be our guest! Simply sign up to use Triee!",
+	"signup_usernamePlaceholder": "Username",
+	"signup_passwordPlaceholder": "Password",
+	"signup_clickToSubmit": "Sign up"
 }
