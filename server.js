@@ -157,3 +157,16 @@ app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
     response.cookie('lang', lang, {maxAge: process.env.LANG_COOKIE_MAXAGE, httpOnly: false});
     response.redirect("/");
 })
+
+//---------------------------------------------------------------------------------------------------
+//----제대로 Thinkbud, Triee 나타난다 와 선밴님. 코드를 찢어 놓으셨다.----------------------------------
+//---------------------------------------------------------------------------------------------------
+
+app.get('/budding', (request, response) => {
+  response.render('budding.ejs');
+})
+
+app.post('/budding', (request, response) => {
+  console.log(request.params.cell);
+  response.redirect("/");
+})

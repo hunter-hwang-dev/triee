@@ -5,6 +5,7 @@
 	"index_welcomeMessage": "Triee에 오신 것을 환영합니다!",
 	"index_toLogin": "로그인하러 가기: 이미 계정이 있으신가요?",
 	"index_toSignup": "새 계정 만들기",
+	"index_toBudding": "생각닢 쓰러 가기?",
 
 	"login_heading": "Triee 기존 계정이 있으신가요?",
 	"login_usernamePlaceholder": "아이디",
@@ -14,5 +15,8 @@
 	"signup_heading": "Triee의 신규 회원이 되어보세요!",
 	"signup_usernamePlaceholder": "아이디",
 	"signup_passwordPlaceholder": "비밀번호",
-	"signup_clickToSubmit": "가입"
+	"signup_clickToSubmit": "가입",
+
+	"budding_heading": "생각닢을 틔워 봐요!",
+	"budding_cellPlaceholder": "잎이 돋아나면, Triee가 쑥쑥 자라겠죠?"
 }

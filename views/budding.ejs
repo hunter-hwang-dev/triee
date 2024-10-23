@@ -1,0 +1,17 @@
+<!-- [write-a-post] page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triee</title>
+</head>
+<body>
+    <form id="buddingForm" action="/budding" method="POST">
+        <h2><%= __('budding_heading') %></h2>
+        <input type="text" name="cell" placeholder="<%= __('budding_cellPlaceholder') %>">
+    <br>
+        <input type="submit" value="<%= __('budding_clickToSubmit') %>">
+    </form>
+</body>
+</html>
