@@ -26,7 +26,7 @@ app.use(i18n.init); // i18n 미들웨어 추가
 app.set('view engine', 'ejs');
 
 //MongoDB 셋팅
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 let db;
 const url = dbUri;
 new MongoClient(url).connect().then((client)=> {
@@ -77,7 +77,7 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser( async(user, done) => { //cookie 분석 > 어디서든 request.user 사용 가능하게 해줍니다.
-  let result = await db.collection('user').findOne({_id: new ObjectId(user.id)});
+  let result = await db.collection('users').findOne({_id: new ObjectId(user.id)});
   delete result.password; //비번은 삭제
   process.nextTick(() => { 
     done(null, result);
@@ -95,11 +95,17 @@ app.get('/signup', (request, response) => {
   response.render('signup.ejs');
 })
 
-app.post('/signup', (request, response) => {
+app.post('/signup', async (request, response) => {
   //서버에 계정 정보 추가하기
   console.log(request.body);
-
+  await db.collection('users').insertOne({
+    username: request.body.username ,
+    password: request.body.password })
+    console.log('user info added on DB');
+    response.redirect('/');
 })
+
+//-------------------------------------------------------------------------
 
 app.get('/login', (request, response) => {
     console.log(request.user);
@@ -111,14 +117,14 @@ app.post('/login', async (request, response, next) => {
 
   passport.authenticate('local', (error, user, info) => {
     console.log('passport auth start');
-    // if (error) {
-    //   console.log('server error');
-    //   return response.status(500).json(error);
-    // }
-    // if (!user) {
-    //   console.log('invalid username or password')
-    //   return response.status(401).json(info.message);
-    // }
+    if (error) {
+      console.log('server error');
+      return response.status(500).json(error);
+    }
+    if (!user) {
+      console.log('invalid username or password')
+      return response.status(401).json(info.message);
+    }
     request.logIn(user, (err) => {
       if (err) {
         console.log('server error 2')
