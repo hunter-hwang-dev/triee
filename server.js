@@ -98,6 +98,14 @@ app.get('/signup', (request, response) => {
 app.post('/signup', async (request, response) => {
   //서버에 계정 정보 추가하기
   console.log(request.body);
+  //빈칸 체크
+  if (request.body.username == '') {
+    return response.status(400).send({ message: "Please write username."});
+  }
+  else if (request.body.password == '') {
+    return response.status(400).send({ message: "Please write password."});
+  }
+  //
   await db.collection('users').insertOne({
     username: request.body.username ,
     password: request.body.password })
