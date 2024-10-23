@@ -38,7 +38,32 @@ new MongoClient(url).connect().then((client)=> {
     console.log(err)
 })
 
+//session passport login 가져오기 시작
+const session = require('express-session')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
+app.use(passport.initialize())
+app.use(session({
+  secret: '암호화에 쓸 비번', //털리면 큰일나요!
+  resave : false,
+  saveUninitialized : false
+}))
+app.use(passport.session()) 
+
+
+passport.use(new LocalStrategy(async (usernameInput, passwordInput, cb) => {
+    let result = await db.collection('users').findOne({ username : usernameInput})
+    if (!result) {
+      return cb(null, false, { message: i18n.t('errors.usernameNotFound') })
+    }
+    if (result.password == passwordInput) {
+      return cb(null, result)
+    } else {
+      return cb(null, false, { message: i18n.t('errors.passwordMismatch') });
+    }
+  }))
+//session passport login 가져오기 끝
 
 app.get('/', (request, response) => {
     console.log("현재 언어 설정: ", request.getLocale());
@@ -47,6 +72,10 @@ app.get('/', (request, response) => {
 
 app.get('/login', (request, response) => {
     response.render('login.ejs')
+})
+
+app.post('/login', async (request, response, next)=>{
+    //제출한 username, password가 db에 있는 값과 일치하는지 확인 후 session 생성
 })
 
 app.get('/change-lang/:lang', (request, response) => { //언어 설정 변경
