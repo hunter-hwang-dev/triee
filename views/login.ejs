@@ -7,11 +7,11 @@
 </head>
 <body>
     <form>
-        <input type="text" name="username" placeholder="<%= __('login_id_is') %>">
+        <input type="text" name="username" placeholder="<%= __('login_usernamePlaceholder') %>">
     <br>
-        <input type="password" name="password" placeholder="<%= __('login_password_is') %>">
+        <input type="password" name="password" placeholder="<%= __('login_passwordPlaceholder') %>">
     <br>
-        <input type="submit" value="<%=__('login_button')%>">
+        <input type="submit" value="<%= __('login_clickToSubmit') %>">
     </form>
 
     <%- include('footer.ejs') %>

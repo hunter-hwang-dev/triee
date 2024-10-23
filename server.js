@@ -17,9 +17,9 @@ i18n.configure({
     queryParameter: 'lang'
   });
   
-app.use(cookieParser());
-app.use(i18n.init); // i18n 미들웨어 추가
 
+app.use(i18n.init); // i18n 미들웨어 추가
+app.use(cookieParser());
 app.set('view engine', 'ejs')
 
 //MongoDB 셋팅
