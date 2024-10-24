@@ -167,6 +167,6 @@ app.get('/budding', (request, response) => {
 })
 
 app.post('/budding', (request, response) => {
-  console.log(request.params.cell);
+  console.log(request.body.cell);
   response.redirect("/");
 })
