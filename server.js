@@ -51,19 +51,19 @@ app.use(i18n.init); // i18n 미들웨어 추가
 app.set('view engine', 'ejs');
 
 //MongoDB 셋팅
-const { MongoClient, ObjectId } = require('mongodb');
-let db;
-const url = process.env.DB_URL;
-new MongoClient(url).connect().then((client)=> {
-    console.log('DB connected');
-    db = client.db('trieeDB');
+let connectDB = require('./database.js')
 
-    app.listen(process.env.PORT, () => {
-        console.log('서버 실행중: ' + 'http://localhost:' + process.env.PORT);
-    })
-    
+let db;
+connectDB.then((client)=> { //오래 걸리는 건 export하기보단 server.js에 담는 것이 나음.
+  console.log('DB connected');
+  db = client.db('trieeDB');
+
+  app.listen(process.env.PORT, () => {
+      console.log('서버 실행중: ' + 'http://localhost:' + process.env.PORT);
+  })
+  
 }).catch((err)=> {
-    console.log(err);
+  console.log(err);
 })
 
 //--------------------------------------------------------------
@@ -202,4 +202,4 @@ app.post('/budding', upload.array('img1', 4), (request, response) => { //최대 
 //---------------------------------------------------------------------------------------------------
 //라우터 갖고오기-------------------------------------------------------------------------------------
 
-app.use('/', require('./routes/nunupedia.js'));
+app.use('/nunupedia', require('./routes/nunupedia.js'));
