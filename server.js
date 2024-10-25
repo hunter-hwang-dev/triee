@@ -14,4 +14,10 @@ app.listen(process.env.PORT, () => {
     "서버 실행중: " + "http://localhost:" + process.env.PORT + "/handle"
   );
 });
+
+app.use(express.static(path.join(__dirname, "triee-app/build")));
+app.get("/react", (req, res) => {
+  res.sendFile(path.join(__dirname, "triee-app/build/index.html"));
+});
+
 app.use("/handle", require("./routes/handle.js")); //나중에 handle을 parameter로 변경할 것.
