@@ -15,9 +15,9 @@ app.listen(process.env.PORT, () => {
   );
 });
 
-app.use(express.static(path.join(__dirname, "triee-app/build")));
+app.use(express.static(path.join(__dirname, "react-app/build")));
 app.get("/react", (req, res) => {
-  res.sendFile(path.join(__dirname, "triee-app/build/index.html"));
+  res.sendFile(path.join(__dirname, "react-app/build/index.html"));
 });
 
 app.use("/handle", require("./routes/handle.js")); //나중에 handle을 parameter로 변경할 것.
