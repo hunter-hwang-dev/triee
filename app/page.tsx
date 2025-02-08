@@ -38,6 +38,13 @@ export default function Page() {
             //hidden => 모바일 DOM에서 숨김, md:block => 데스크탑에서는 보이게
             alt="Screenshots of the dashboard project showing desktop version"
           ></Image>
+          <Image
+            src="/hero-mobile.png"
+            width={560}
+            height={620}
+            className="block md:hidden"
+            alt="Screenshots of the dashboard project showing mobile version"
+          ></Image>
         </div>
       </div>
     </main>
